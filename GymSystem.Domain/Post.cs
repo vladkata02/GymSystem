@@ -2,6 +2,14 @@
 {
     public class Post
     {
+        public Post(string? description, DateTime createDate, int userId, byte[]? imageContent)
+        {
+            Description = description;
+            CreateDate = createDate;
+            UserId = userId;
+            ImageContent = imageContent;
+        }
+
         public int PostId { get; set; }
 
         public string? Description { get; set; }
