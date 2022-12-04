@@ -9,6 +9,8 @@ namespace GymSystem.Data
         {
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPostRepository, PostRepository>();
+            services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+            services.AddScoped<IPriceRepository, PriceRepository>();
 
             return services;
         }

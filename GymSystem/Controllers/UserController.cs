@@ -24,6 +24,16 @@
         [HttpPost("create")]
         public void CreateUser(UserVO user)
         {
+            if (this.userRepository.CheckIfUsernameExist(user.Username))
+            {
+                throw new Exception("Username already exists");
+            }
+
+            if (this.userRepository.CheckIfEmailExist(user.Email))
+            {
+                throw new Exception("Email already exists");
+            }
+
             this.userRepository.CreateUser(user);
         }
 

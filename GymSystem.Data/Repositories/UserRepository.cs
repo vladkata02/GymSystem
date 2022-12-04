@@ -1,9 +1,9 @@
 ﻿using GymSystem.Data.Utilities;
 using GymSystem.Data.ViewObjects;
 using GymSystem.Domain;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using BC = BCrypt.Net.BCrypt;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -19,8 +19,6 @@ namespace GymSystem.Data.Repositories
     {
         private AppDbContext context;
         private readonly IConfiguration configuration;
-        private const int SaltSize = 16;
-        private const int HashSize = 20;
 
         public UserRepository(AppDbContext context, IConfiguration configuration)
         {
@@ -28,9 +26,20 @@ namespace GymSystem.Data.Repositories
             this.configuration = configuration;
         }
 
+        public bool CheckIfUsernameExist(string username)
+        {
+            return this.context.Users.Where(u => u.Username == username).Any();
+        }
+
+        public bool CheckIfEmailExist(string email)
+        {
+            return this.context.Users.Where(u => u.Email == email).Any();
+        }
+
         public void CreateUser(UserVO user)
         {
-            this.context.Users.Add(new User(user.Username, user.Email, this.Hashed(user.Password), false));
+            var hashedPassword = BC.HashPassword(user.Password);
+            this.context.Users.Add(new User(user.Username, user.Email, hashedPassword, false));
             this.context.SaveChanges();
         }
 
@@ -40,7 +49,7 @@ namespace GymSystem.Data.Repositories
         {
             var wantedUser = this.context.Users.Where(u => u.Username == user.Username);
 
-            if (wantedUser.Any())
+            if (wantedUser.Any() && !BC.Verify(user.Password, wantedUser.First().PasswordHashed))
             {
                 return null;
             }
@@ -60,18 +69,5 @@ namespace GymSystem.Data.Repositories
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return new Tokens { Token = tokenHandler.WriteToken(token) };
         }
-
-        private string Hashed(string password)
-        {
-            byte[] salt = RandomNumberGenerator.GetBytes(128 / 8);
-
-            return Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: password!,
-                salt: salt,
-                prf: KeyDerivationPrf.HMACSHA256,
-                iterationCount: 100,
-                numBytesRequested: 256 / 8));
-        }
-
     }
 }

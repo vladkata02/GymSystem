@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GymSystem.API.Controllers
 {
-
     [Route("api/post")]
     [ApiController]
     public class PostController : ControllerBase
@@ -22,7 +21,7 @@ namespace GymSystem.API.Controllers
             return this.postRepository.GetAllPosts();
         }
 
-        [HttpGet("create")]
+        [HttpPost("create")]
         public void CreatePost(PostVO post)
         {
             var userId = int.Parse(this.HttpContext.User.Claims.First(c => c.Type == "UserId").Value);

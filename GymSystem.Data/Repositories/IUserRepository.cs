@@ -10,6 +10,10 @@ namespace GymSystem.Data.Repositories
 {
     public interface IUserRepository
     {
+        bool CheckIfUsernameExist(string username);
+
+        bool CheckIfEmailExist(string email);
+
         void CreateUser(UserVO user);
 
         Tokens? Authenticate(UserVO user);

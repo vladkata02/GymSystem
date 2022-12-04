@@ -1,6 +1,7 @@
 using System.Text;
 using GymSystem.API;
 using GymSystem.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -31,6 +32,8 @@ builder.Services.AddAuthentication(x =>
 builder.Services.AddMemoryCache();
 builder.Services.AddControllers();
 builder.Services.RegisterDataServices(configuration);
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddGymSystemServices();
 builder.Services.AddSwaggerGen();

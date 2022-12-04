@@ -2,6 +2,14 @@
 {
     public class Subscription
     {
+        public Subscription(int userId, DateTime dateFrom, DateTime dateTo, decimal moneyPaid)
+        {
+            UserId = userId;
+            DateFrom = dateFrom;
+            DateTo = dateTo;
+            MoneyPaid = moneyPaid;
+        }
+
         public int SubscriptionId { get; set; }
 
         public int UserId { get; set; }
