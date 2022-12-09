@@ -1,7 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { appEmailDomains } from 'src/app/shared/constants';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -11,30 +10,30 @@ import { AuthService } from '../auth.service';
 })
 export class LoginComponent {
 
-  appEmailDomains = appEmailDomains;
+  loginError = "";
 
   @ViewChild(
-    // 'form',
     NgForm,
     { static: true }
   ) form!: ElementRef<HTMLInputElement>;
-  // @ViewChild('files', { static: true }) files!: ElementRef<HTMLInputElement>;
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private authService: AuthService) {
 
   }
 
   loginHandler(form: NgForm): void {
-    // console.log(this.files.nativeElement.files);
     if (form.invalid) { return; }
     const { email, password } = form.value;
     this.authService.login(email!, password!)
-      .subscribe(user => {
-        this.router.navigate(['/theme/recent']);
+      .subscribe({
+        error: (errorResponse) => {
+          this.loginError = errorResponse.error;
+        },
+        next: () => {
+        const returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] || '/';
+
+        this.router.navigate([returnUrl]);
+        }
       });
-
-    const returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] || '/';
-
-    this.router.navigate([returnUrl]);
   }
 }

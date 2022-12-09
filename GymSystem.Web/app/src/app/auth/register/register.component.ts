@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 // import { catchError, map, of, throwError } from 'rxjs';
-import { appEmailDomains } from 'src/app/shared/constants';
 import { appEmailValidator, sameValueGroupValidator } from 'src/app/shared/validators';
 import { AuthService } from '../auth.service';
 
@@ -15,9 +14,8 @@ export class RegisterComponent {
 
   form = this.fb.group({
     username: ['', [Validators.required, Validators.minLength(5)]],
-    email: ['', [Validators.required, appEmailValidator(appEmailDomains)]],
+    email: ['', [Validators.required, appEmailValidator()]],
     ext: [''],
-    tel: [''],
     pass: this.fb.group({
       password: ['', [Validators.required, Validators.minLength(5)]],
       rePassword: []
@@ -30,10 +28,10 @@ export class RegisterComponent {
 
   registerHandler() {
     if (this.form.invalid) { return; }
-    const { username, email, pass: { password, rePassword } = {}, tel } = this.form.value;
-    this.authService.register(username!, email!, password!, rePassword!, tel || undefined)
+    const { username, email, pass: { password, rePassword } = {} } = this.form.value;
+    this.authService.register(username!, email!, password!, rePassword! || undefined)
       .subscribe(user => {
-        this.router.navigate(['/theme/recent']);
+        this.router.navigate(['/']);
       });
   }
 }

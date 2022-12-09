@@ -15,14 +15,14 @@ export class RecentPostsComponent implements OnInit {
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-    this.apiService.loadPosts(5).subscribe({
-      next: (value) => {
-        this.posts = value;
-      },
-      error: (err) => {
-        this.errorFetcingData = true;
-        console.error(err);
-      }
-    })
+    // this.apiService.loadPosts(5).subscribe({
+    //   next: (value) => {
+    //     this.posts = value;
+    //   },
+    //   error: (err) => {
+    //     this.errorFetcingData = true;
+    //     console.error(err);
+    //   }
+    // })
   }
 }

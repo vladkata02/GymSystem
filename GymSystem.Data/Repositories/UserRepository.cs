@@ -26,6 +26,11 @@ namespace GymSystem.Data.Repositories
             this.configuration = configuration;
         }
 
+        public User? GetById(int userId)
+        {
+            return this.context.Users.Find(userId);
+        }
+
         public bool CheckIfUsernameExist(string username)
         {
             return this.context.Users.Where(u => u.Username == username).Any();
@@ -47,9 +52,9 @@ namespace GymSystem.Data.Repositories
         public Tokens? Authenticate(UserVO user)
         #pragma warning restore CS8766
         {
-            var wantedUser = this.context.Users.Where(u => u.Username == user.Username);
+            var wantedUser = this.context.Users.Where(u => u.Email == user.Email).FirstOrDefault();
 
-            if (wantedUser.Any() && !BC.Verify(user.Password, wantedUser.First().PasswordHashed))
+            if (wantedUser == null || !BC.Verify(user.Password, wantedUser.PasswordHashed))
             {
                 return null;
             }
@@ -60,7 +65,7 @@ namespace GymSystem.Data.Repositories
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.Username),
+                    new Claim(ClaimTypes.Email, user.Email),
                     new Claim("UserId", $"{user.UserId}")
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(30),

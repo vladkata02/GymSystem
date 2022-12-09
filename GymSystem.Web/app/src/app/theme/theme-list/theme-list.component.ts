@@ -15,15 +15,15 @@ export class ThemeListComponent implements OnInit {
   constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-    this.apiService.loadThemes().subscribe({
-      next: (value) => {
-        this.themeList = value;
-      },
-      error: (err) => {
-        this.errorFetcingData = true;
-        console.error(err);
-      }
-    });
+    // this.apiService.loadThemes().subscribe({
+    //   next: (value) => {
+    //     this.themeList = value;
+    //   },
+    //   error: (err) => {
+    //     this.errorFetcingData = true;
+    //     console.error(err);
+    //   }
+    // });
   }
 
 }

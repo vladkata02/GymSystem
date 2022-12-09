@@ -5,7 +5,6 @@ import { CoreModule } from './core/core.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from './shared/shared.module';
-import { MyModule } from './my-module';
 import { AppRoutingModule } from './app-routing.module';
 import { appInterceptorProvider } from './app.interceptor';
 import { AuthenticateComponent } from './authenticate/authenticate.component';
@@ -23,7 +22,6 @@ import { BehaviorSubject } from 'rxjs';
     CoreModule,
     HttpClientModule,
     SharedModule,
-    MyModule.withProviders()
   ],
   providers: [
     appInterceptorProvider,

@@ -8,14 +8,6 @@
         placeholder="john.doe">
     </p>
 
-    <!-- <select ngModel="456" name="test" multiple>
-      <option value="123">123</option>
-      <option value="456">456</option>
-    </select>
-
-    {{form.value | json}} -->
-    <!-- <input #files type="file" ngModel required> -->
-
     <ng-container *ngIf="emailInput.touched">
       <p class="error" *ngIf="emailInput.errors?.['required']">
         Email is required!
@@ -38,6 +30,8 @@
         Password must be at least 5 characters!
       </p>
     </ng-container>
+    <p class="error" ngModel="loginError">{{loginError}}
+    </p>
 
     <button [disabled]="form.invalid">Login</button>
 

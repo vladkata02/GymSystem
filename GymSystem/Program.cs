@@ -9,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 var configuration = builder.Configuration;
 
+var myAllowSpecificOrigins = "corsapp";
+
 builder.Services.AddAuthentication(x =>
 {
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -29,11 +31,16 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
+builder.Services.AddCors(p => p.AddPolicy(myAllowSpecificOrigins, build =>
+{
+    build.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+}));
+
 builder.Services.AddMemoryCache();
 builder.Services.AddControllers();
 builder.Services.RegisterDataServices(configuration);
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            .AddCookie();
+                .AddCookie();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddGymSystemServices();
 builder.Services.AddSwaggerGen();
@@ -47,6 +54,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(myAllowSpecificOrigins);
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

@@ -2,6 +2,10 @@
 
 public class User
 {
+    public User()
+    {
+    }
+
     public User(string? username, string? email, string? passwordHashed, bool hasActiveSubscription)
     {
         Username = username;

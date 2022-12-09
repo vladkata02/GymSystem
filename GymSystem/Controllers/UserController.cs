@@ -4,13 +4,13 @@
     using System.Security.Claims;
     using GymSystem.Data.Repositories;
     using GymSystem.Data.ViewObjects;
+    using GymSystem.Domain;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
-    [Route("api/user")]
+    [Route("api/auth")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -21,32 +21,51 @@
             this.userRepository = userRepository;
         }
 
-        [HttpPost("create")]
-        public void CreateUser(UserVO user)
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public IActionResult CreateUser(UserVO user)
         {
             if (this.userRepository.CheckIfUsernameExist(user.Username))
             {
-                throw new Exception("Username already exists");
+                return this.Unauthorized("User with this username already exists!");
             }
 
             if (this.userRepository.CheckIfEmailExist(user.Email))
             {
-                throw new Exception("Email already exists");
+                return this.Unauthorized("User with this email already exists!");
             }
 
             this.userRepository.CreateUser(user);
+
+            var token = this.userRepository.Authenticate(user);
+
+            return this.Ok(token);
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("user")]
+        public User? GetUser()
+        {
+            var userId = this.HttpContext.User.FindFirst("UserId");
+            if (userId != null)
+            {
+                return this.userRepository.GetById(int.Parse(userId.Value));
+            }
+
+            return null;
         }
 
         [AllowAnonymous]
         [HttpPost]
-        [Route("authenticate")]
+        [Route("login")]
         public IActionResult Authenticate(UserVO user)
         {
             var token = this.userRepository.Authenticate(user);
 
             if (token == null)
             {
-                return this.Unauthorized();
+                return this.Unauthorized("Wrong email or password!");
             }
 
             var claims = new List<Claim>();
@@ -54,6 +73,15 @@
 
             this.Claims(claims);
             return this.Ok(token);
+        }
+
+        [HttpPost]
+        [Route("logout")]
+        public IActionResult Logout()
+        {
+            this.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return this.Ok();
         }
 
         private void Claims(List<Claim> claim)

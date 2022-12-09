@@ -21,13 +21,8 @@ import { ErrorComponent } from './error/error.component';
     CommonModule,
     RouterModule,
     SharedModule,
-    // MyModule
   ],
   providers: [
-    // {
-    //   provide: 'Test',
-    //   useValue: 'Best'
-    // }
   ],
   exports: [
     HomeComponent,
