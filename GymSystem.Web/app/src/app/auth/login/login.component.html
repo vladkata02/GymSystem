@@ -2,40 +2,37 @@
   <fieldset>
     <h2>Login Form</h2>
 
-    <p class="field field-icon">
-      <label for="email"><span><i class="fas fa-envelope"></i></span></label>
-      <input #emailInput="ngModel" class="input-error" ngModel required type="text" name="email" id="email"
-        placeholder="john.doe">
-    </p>
+    <div class="form-group">
+      <label for="email"><i class="envelope-at-fill"></i></label>
+      <input #emailInput="ngModel" class="form-control" ngModel required type="text" name="email" id="email" placeholder="ivan@abv.bg">
+    </div>
 
     <ng-container *ngIf="emailInput.touched">
-      <p class="error" *ngIf="emailInput.errors?.['required']">
+      <div class="alert alert-danger" *ngIf="emailInput.errors?.['required']">
         Email is required!
-      </p>
-      <p class="error" *ngIf="emailInput.errors?.['appEmailValidator']">
+      </div>
+      <div class="alert alert-danger" *ngIf="emailInput.errors?.['appEmailValidator']">
         Email is not valid!
-      </p>
+      </div>
     </ng-container>
 
-    <p class="field field-icon">
-      <label for="password"><span><i class="fas fa-lock"></i></span></label>
-      <input type="password" ngModel #passwordInput="ngModel" name="password" id="password" placeholder="******"
-        required [minlength]="5">
-    </p>
+    <div class="form-group">
+      <label for="password"><i class="fas fa-lock"></i></label>
+      <input type="password" ngModel #passwordInput="ngModel" name="password" id="password" placeholder="******" required [minlength]="5">
+    </div>
     <ng-container *ngIf="passwordInput.touched">
-      <p class="error" *ngIf="passwordInput.errors?.['required']">
+      <div class="alert alert-danger" *ngIf="passwordInput.errors?.['required']">
         Password is required!
-      </p>
-      <p class="error" *ngIf="passwordInput.errors?.['minlength']">
+      </div>
+      <div class="alert alert-danger" *ngIf="passwordInput.errors?.['minlength']">
         Password must be at least 5 characters!
-      </p>
+      </div>
     </ng-container>
-    <p class="error" ngModel="loginError">{{loginError}}
-    </p>
+    <div class="alert alert-danger" ngModel="loginError">{{loginError}}</div>
 
-    <button [disabled]="form.invalid">Login</button>
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Login</button>
 
-    <p class="text-center">
+    <p class="text-center mt-3">
       Have an account?
       <a href="#">Register</a>
     </p>
