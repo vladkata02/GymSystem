@@ -1,46 +1,42 @@
 <header>
-  <div class="mini-navbar-wrap">
-    <div class="logo-wrap">
-      <p class="logo"><span class="logo">SoftUni Forum</span></p>
+  <nav>
+    <div class="mini-navbar-wrap">
+      <div class="logo-wrap">
+        <p class="logo"><span class="logo">Gym | Your Path to a Healthier Lifestyle</span></p>
+      </div>
+      <div class="mini-navbar">
+      </div>
     </div>
-    <div class="mini-navbar">
-      <ng-template #loggedOutTemplate>
-        <ul>
-          <li>
+    <div></div>
+    <ul>
+      <ul>
+        <li>
+          <a routerLink="/">Home</a>
+        </li>
+        <li>
+          <a routerLink="/theme/recent">Themes</a>
+        </li>
+        <li>
+          <a routerLink="/theme/new">New Theme</a>
+        </li>
+      </ul>
+      <div class="auth">
+        <ng-container *ngTemplateOutlet="isLoggedIn ? loggedInTemplate : loggedOutTemplate"></ng-container>
+        <ng-template #loggedOutTemplate>
+          <li >
             <a routerLink="/auth/login">Login</a>
           </li>
           <li>
             <a routerLink="/auth/register">Register</a>
           </li>
-        </ul>
-      </ng-template>
+        </ng-template>
 
-      <ng-template #loggedInTemplate>
-        <ul>
-          <li>
-            <a routerLink="/auth/profile">{{user?.username}}'s profile</a>
-          </li>
+        <ng-template #loggedInTemplate>
           <li>
             <a routerLink="/auth/logout">Logout</a>
           </li>
-        </ul>
-      </ng-template>
-
-      <ng-container *ngTemplateOutlet="isLoggedIn ? loggedInTemplate : loggedOutTemplate"></ng-container>
-    </div>
-  </div>
-  <nav>
-    <ul>
-      <li>
-        <a routerLink="/">Home</a>
-      </li>
-      <li>
-        <a routerLink="/theme/recent">Themes</a>
-      </li>
-      <li>
-        <a routerLink="/theme/new">New Theme</a>
-      </li>
+        </ng-template>
+      </div>
     </ul>
   </nav>
-
 </header>

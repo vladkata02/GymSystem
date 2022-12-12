@@ -1,13 +1,13 @@
 header {
-    background: rgb(0, 128, 182);
-    background: linear-gradient(0deg, rgba(0, 128, 182, 1) 0%, rgba(0, 128, 182, 1) 35%, rgba(0, 212, 255, 1) 100%);
+    background:url(https://www.colorsled.com/project/24.2.png);
+    background-size: cover;
 }
 
 header ul {
     padding: 0;
     display: flex;
     align-items: center;
-    width: 75%;
+    width: 79%;
     margin: auto;
 }
 
@@ -25,30 +25,37 @@ header ul span {
 
 header li {
     list-style: none;
-    margin: .35em;
     padding: 0 .95em;
+    font-size: larger;
+}
+header li:hover {
+    background-color: #4C5B61;
 }
 
 header a {
     text-decoration: none;
     color: white;
     cursor: pointer;
+    -webkit-text-stroke-width: 0.2px;
+    -webkit-text-stroke-color: black;
 }
 
 nav {
-    border-top: 1px solid #00acf4;
+    border-top: 1px solid #4C5B61;
+    border-bottom: 10px solid #4C5B61;
 }
 
 .logo {
-    font-size: 1.3em;
+    font-size: 1.5em;
     color: white;
     padding-bottom: 0;
+    background-color: #07d5f9;
+    padding-left: 0.1em;
+    padding-right: 0.1em;
 }
 
 .logo-wrap {
-    font-family: 'Parisienne', cursive;
-    letter-spacing: .5em;
-    margin: 0.5em 0;
+    font-family: Stencil Std, fantasy;
 }
 
 .mini-navbar-wrap {
@@ -63,6 +70,7 @@ nav {
 /* mini-navbar */
 
 .mini-navbar ul {
+    display: flex;
     background-color: #6ba1b8;
     border-radius: 5px;
 }
@@ -70,4 +78,10 @@ nav {
 .mini-navbar ul li+li {
     border-left: 1px solid lightgrey;
     padding-left: .5em;
+}
+
+.auth {
+    align-self: flex-end;
+    padding: 0;
+    display: flex;
 }

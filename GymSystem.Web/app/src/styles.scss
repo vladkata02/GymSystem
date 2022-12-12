@@ -169,10 +169,24 @@ span {
 }
 
 button {
-    background-color: #4ebced;
-    color: white;
+    background-color: #2C423F;
+    color: #2C423F;
 }
 
 button:hover {
     cursor: pointer;
 }
+
+html, body { height: 100%; }
+body { font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+@import '../node_modules/bootstrap-icons/font/bootstrap-icons';
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+//https://coolors.co/bfb48f-564e58-904e55-f2efe9-252627

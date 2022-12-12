@@ -1,11 +1,11 @@
 <form #form="ngForm" class="login" (ngSubmit)="loginHandler(form)">
   <fieldset>
-    <h2>Login Form</h2>
+    <h2>Login</h2>
 
-    <div class="form-group">
-      <label for="email"><i class="envelope-at-fill"></i></label>
-      <input #emailInput="ngModel" class="form-control" ngModel required type="text" name="email" id="email" placeholder="ivan@abv.bg">
-    </div>
+    <p class="field field-icon">
+      <label for="email"><span><i class="bi bi-envelope-at-fill"></i></span></label>
+      <input #emailInput="ngModel" ngModel required name="email" id="email" placeholder="ivan@abv.bg">
+    </p>
 
     <ng-container *ngIf="emailInput.touched">
       <div class="alert alert-danger" *ngIf="emailInput.errors?.['required']">
@@ -16,10 +16,10 @@
       </div>
     </ng-container>
 
-    <div class="form-group">
-      <label for="password"><i class="fas fa-lock"></i></label>
+    <p class="field field-icon">
+      <label for="password"><span><i class="bi bi-key-fill"></i></span></label>
       <input type="password" ngModel #passwordInput="ngModel" name="password" id="password" placeholder="******" required [minlength]="5">
-    </div>
+    </p>
     <ng-container *ngIf="passwordInput.touched">
       <div class="alert alert-danger" *ngIf="passwordInput.errors?.['required']">
         Password is required!
@@ -28,14 +28,9 @@
         Password must be at least 5 characters!
       </div>
     </ng-container>
-    <div class="alert alert-danger" ngModel="loginError">{{loginError}}</div>
+    <div *ngIf="loginError" class="alert alert-danger" ngModel="loginError">{{loginError}}</div>
 
-    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Login</button>
-
-    <p class="text-center mt-3">
-      Have an account?
-      <a href="#">Register</a>
-    </p>
+    <button type="submit" [disabled]="form.invalid">Login</button>
 
   </fieldset>
 </form>

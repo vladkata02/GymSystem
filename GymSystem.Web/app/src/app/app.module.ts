@@ -12,6 +12,9 @@ import { AuthenticateComponent } from './authenticate/authenticate.component';
 import { API_ERROR } from './shared/constants';
 import { BehaviorSubject } from 'rxjs';
 
+import { NgForm } from '@angular/forms';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +26,7 @@ import { BehaviorSubject } from 'rxjs';
     CoreModule,
     HttpClientModule,
     SharedModule,
-    NgbModule,
+    NgbModule
   ],
   providers: [
     appInterceptorProvider,
