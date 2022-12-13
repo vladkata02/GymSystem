@@ -9,12 +9,12 @@
       <input class="input-error" type="text" formControlName="username" id="username" placeholder="Ivan">
     </p>
     <ng-container *ngIf="form.get('username')?.touched">
-      <p *ngIf="form.get('username')?.errors?.['required']" class="alert alert-danger">
+      <div *ngIf="form.get('username')?.errors?.['required']" class="alert alert-danger">
         Username is required!
-      </p>
-      <p *ngIf="form.get('username')?.errors?.['minlength']" class="alert alert-danger">
+      </div>
+      <div *ngIf="form.get('username')?.errors?.['minlength']" class="alert alert-danger">
         Username should be longer than 5 chars
-      </p>
+      </div>
     </ng-container>
 
     <!-- email -->
@@ -52,9 +52,9 @@
         <input type="password" formControlName="rePassword" id="rePassword" placeholder="******">
       </p>
 
-      <p *ngIf="form.get('pass')?.errors?.['sameValueGroupValidator'] && form.get('pass')?.get('rePassword')?.touched"
+      <div *ngIf="form.get('pass')?.errors?.['sameValueGroupValidator'] && form.get('pass')?.get('rePassword')?.touched"
         class="alert alert-danger">Repeat Password does not match
-        password!</p>
+        password!</div>
     </ng-container>
     <button [disabled]="form.invalid">Create Account</button>
   </fieldset>
