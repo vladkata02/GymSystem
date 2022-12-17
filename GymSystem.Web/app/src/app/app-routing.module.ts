@@ -27,6 +27,10 @@ const routes: Routes = [
     loadChildren: () => import('./posts/posts.module').then(m => m.PostsModule)
   },
   {
+    path: 'subscriptions',
+    loadChildren: () => import('./subscriptions/subscriptions.module').then(m => m.SubscriptionsModule)
+  },
+  {
     path: '**',
     redirectTo: '/not-found'
   }

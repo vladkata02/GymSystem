@@ -12,14 +12,14 @@ namespace GymSystem.Data.ViewObjects
         public PriceVO(Price price)
         {
             this.PriceId = price.PriceId;
-            this.Month = price.Month;
+            this.Months = price.Months;
             this.Amount = price.Amount;
             this.IsDefaultPrice = price.IsDefaultPrice;
         }
 
         public int PriceId { get; set; }
 
-        public int Month { get; set; }
+        public int Months { get; set; }
 
         public decimal Amount { get; set; }
 

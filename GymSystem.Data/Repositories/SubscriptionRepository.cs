@@ -17,14 +17,39 @@ namespace GymSystem.Data.Repositories
             this.context = context;
         }
 
-        public IList<SubscriptionVO> GetAllSubscriptions()
+        public IList<SubscriptionVO> GetAllSubscriptions(int userId)
         {
-            return this.context.Subscriptions.Select(p => new SubscriptionVO(p)).ToList();
+            return this.context.Subscriptions.Where(s => s.UserId == userId)
+                                             .OrderByDescending(s => s.DateTo)
+                                             .Select(s => new SubscriptionVO(s))
+                                             .ToList();
         }
 
         public void CreateSubscription(SubscriptionVO subscription, int userId)
         {
+            var currentUserSubscriptions = this.context.Subscriptions.Where(s => s.UserId == userId).ToList();
+
+            if (!currentUserSubscriptions.Any())
+            {
+                subscription.DateFrom = DateTime.Now;
+            }
+            else
+            {
+                if (currentUserSubscriptions.Last().DateTo < DateTime.Now)
+                {
+                    subscription.DateFrom = DateTime.Now;
+                }
+                else
+                {
+                    subscription.DateFrom = currentUserSubscriptions.Last().DateTo;
+                }
+            }
+
+            subscription.DateTo = subscription.DateFrom.AddMonths(subscription.Months);
+
             this.context.Subscriptions.Add(new Subscription(userId, subscription.DateFrom, subscription.DateTo, subscription.MoneyPaid));
+
+            this.context.SaveChanges();
         }
     }
 }

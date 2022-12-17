@@ -35,7 +35,7 @@ GO
 
 CREATE TABLE [dbo].[Prices] (
     [PriceId]                     INT                 NOT NULL IDENTITY,
-    [Month]                       INT                 NULL,
+    [Months]                      INT                 NULL,
     [Amount]                      DECIMAL             NOT NULL,
     [IsDefaultPrice]              BIT                 NOT NULL,
 

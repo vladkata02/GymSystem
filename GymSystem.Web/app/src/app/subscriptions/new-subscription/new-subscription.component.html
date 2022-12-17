@@ -1,0 +1,14 @@
+<form ngForm #form="ngForm" (ngSubmit)="subscriptionHandler(form)" class="new-subscription align-items-center">
+    <div class="field">
+        <label for="Months">Months</label>
+        <input type="number" (ngModelChange)="getPrice(form)" ngModel #monthsInput="ngModel" required id="months" name="months">
+    </div>
+    <div class="field">
+        <label for="Price">Price</label>
+        <input ngModel #moneyPaidInput="ngModel" disabled="true" required id="moneyPaid" name="moneyPaid" value="{{currentPrice | currency}}">
+    </div>
+    <button type="submit">Pay</button>
+</form>
+<div class="alert alert-danger" *ngIf="isFormInvalid">
+    Please choose months.
+</div>

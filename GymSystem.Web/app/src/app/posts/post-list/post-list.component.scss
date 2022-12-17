@@ -3,6 +3,9 @@
     margin-left: 4rem;
     margin-right: 4rem;
     background-color: #4C5B61;
+    display: flex;
+    border:  solid #949B96 3px;
+    border-radius: 15px;
 }
 .post-author {
     color: white;
@@ -20,11 +23,6 @@ h2 {
     object-fit: cover;
     border-radius: 15px;
     border:  solid #949B96 1px;
-}
-.post {
-    display: flex;
-    border:  solid #949B96 3px;
-    border-radius: 15px;
 }
 
 .image-author {

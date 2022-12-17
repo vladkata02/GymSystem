@@ -25,7 +25,7 @@ namespace GymSystem.Data.Repositories
 
         public void CreatePrice(PriceVO price, int userId)
         {
-            this.context.Prices.Add(new Price(price.Month, price.Amount, price.IsDefaultPrice));
+            this.context.Prices.Add(new Price(price.Months, price.Amount, price.IsDefaultPrice));
         }
     }
 }

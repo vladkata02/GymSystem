@@ -16,26 +16,21 @@
         <li>
           <a routerLink="/posts/list">Posts</a>
         </li>
-        <li>
-          <a routerLink="/theme/new">New Theme</a>
+        <li *ngIf="isLoggedIn">
+          <a routerLink="/subscriptions/list">Subscriptions</a>
         </li>
       </ul>
       <div class="auth">
-        <ng-container *ngTemplateOutlet="isLoggedIn ? loggedInTemplate : loggedOutTemplate"></ng-container>
-        <ng-template #loggedOutTemplate>
-          <li >
+          <li *ngIf="!isLoggedIn">
             <a routerLink="/auth/login">Login</a>
           </li>
-          <li>
+          <li *ngIf="!isLoggedIn">
             <a routerLink="/auth/register">Register</a>
           </li>
-        </ng-template>
 
-        <ng-template #loggedInTemplate>
-          <li>
+          <li *ngIf="isLoggedIn">
             <a routerLink="/auth/logout">Logout</a>
           </li>
-        </ng-template>
       </div>
     </ul>
   </nav>

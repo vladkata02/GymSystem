@@ -26,7 +26,6 @@ const routes: Routes = [
   {
     path: 'logout',
     component: LogoutComponent,
-    canActivate: [AuthActivate],
     data: {
       title: 'Logout',
       loginRequired: true

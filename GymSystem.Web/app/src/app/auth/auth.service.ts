@@ -15,17 +15,15 @@ export class AuthService implements OnDestroy {
   );
 
   user: IUser | null = null;
-  idToken: string | null = null;
 
   get isLoggedIn() {
-    return this.user !== null;
+    return localStorage.getItem("id_token") !== null;
   }
 
   subscription: Subscription;
 
   constructor(private http: HttpClient) {
     this.subscription = this.user$.subscribe(user => {
-      this.idToken = localStorage.getItem("id_token");
       this.user = user;
     });
   }
@@ -33,18 +31,18 @@ export class AuthService implements OnDestroy {
   authorizedHeaders(){
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.user?.token}`
-    });
-    return { headers: headers}
-  }
-
-  authorizedHeadersForUser(){
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem("id_token")}`
     });
     return { headers: headers}
   }
+
+  // authorizedHeadersForUser(){
+  //   const headers = new HttpHeaders({
+  //     'Content-Type': 'application/json',
+  //     'Authorization': `Bearer ${localStorage.getItem("id_token")}`
+  //   });
+  //   return { headers: headers}
+  // }
 
   register(username: string, email: string, password: string, rePassword: string) {
     return this.http.post<IUser>('/api/auth/register', { username, email, password, rePassword})
@@ -57,13 +55,12 @@ export class AuthService implements OnDestroy {
   }
 
   logout() {
-    localStorage.removeItem("id_token");
     return this.http.post<void>('/api/auth/logout', {})
-      .pipe(tap(() => this.user$$.next(null)));;
+      .pipe(tap(() => localStorage.removeItem("id_token")));
   }
 
   getUser() {
-    const headers = this.authorizedHeadersForUser();
+    const headers = this.authorizedHeaders();
     
     return this.http.get<IUser>('/api/auth/user', headers )
       .pipe(

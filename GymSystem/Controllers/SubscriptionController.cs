@@ -1,10 +1,12 @@
 ﻿using GymSystem.Data.Repositories;
 using GymSystem.Data.ViewObjects;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace GymSystem.API.Controllers
 {
-    [Route("api/subscribtion")]
+    [Route("api/subscriptions")]
     [ApiController]
     public class SubscriptionController : ControllerBase
     {
@@ -15,18 +17,39 @@ namespace GymSystem.API.Controllers
             this.subscriptionRepository = subscriptionRepository;
         }
 
-        [HttpGet("getAll")]
+        [Authorize]
+        [HttpGet("list")]
         public IList<SubscriptionVO> GetSubscriptions()
         {
-            return this.subscriptionRepository.GetAllSubscriptions();
+            var user = this.GetContextUser();
+
+            return this.subscriptionRepository.GetAllSubscriptions(user.UserId);
         }
 
+        [Authorize]
         [HttpPost("create")]
         public void CreateSubscription(SubscriptionVO subscription)
         {
-            var userId = int.Parse(this.HttpContext.User.Claims.First(c => c.Type == "UserId").Value);
+            var user = this.GetContextUser();
 
-            this.subscriptionRepository.CreateSubscription(subscription, userId);
+            this.subscriptionRepository.CreateSubscription(subscription, user.UserId);
+        }
+
+        private UserVO GetContextUser()
+        {
+            var identity = this.HttpContext.User.Identity as ClaimsIdentity;
+
+            if (identity != null)
+            {
+                var userClaims = identity.Claims;
+
+                return new UserVO
+                {
+                    UserId = int.Parse(userClaims.FirstOrDefault(o => o.Type == "UserId")?.Value),
+                };
+            }
+
+            return null;
         }
     }
 }

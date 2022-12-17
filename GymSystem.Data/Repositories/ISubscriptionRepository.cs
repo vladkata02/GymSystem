@@ -9,7 +9,7 @@ namespace GymSystem.Data.Repositories
 {
     public interface ISubscriptionRepository
     {
-        IList<SubscriptionVO> GetAllSubscriptions();
+        IList<SubscriptionVO> GetAllSubscriptions(int userId);
 
         void CreateSubscription(SubscriptionVO post, int userId);
     }

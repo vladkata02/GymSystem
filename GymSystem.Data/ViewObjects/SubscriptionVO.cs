@@ -9,6 +9,10 @@ namespace GymSystem.Data.ViewObjects
 {
     public class SubscriptionVO
     {
+        public SubscriptionVO()
+        {
+        }
+
         public SubscriptionVO(Subscription subscription)
         {
             SubscriptionId = subscription.SubscriptionId;
@@ -21,6 +25,8 @@ namespace GymSystem.Data.ViewObjects
         public int SubscriptionId { get; set; }
 
         public int UserId { get; set; }
+
+        public int Months { get; set; }
 
         public DateTime DateFrom { get; set; }
 

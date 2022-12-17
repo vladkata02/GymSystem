@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GymSystem.API.Controllers
 {
-    [Route("api/price")]
+    [Route("api/prices")]
     [ApiController]
     public class PriceController : ControllerBase
     {
@@ -15,7 +15,7 @@ namespace GymSystem.API.Controllers
             this.priceRepository = priceRepository;
         }
 
-        [HttpGet("getAll")]
+        [HttpGet("list")]
         public IList<PriceVO> GetPrices()
         {
             return this.priceRepository.GetAllPrices();

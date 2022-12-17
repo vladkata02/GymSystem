@@ -1,0 +1,18 @@
+<div class="subscription-position">
+    <app-new-subscription></app-new-subscription>
+    <table class="subscription-table">
+        <tr class="headers">
+            <th>Date from</th>
+            <th>Date to</th>
+            <th>Money paid</th>
+        </tr>
+        <tr *ngFor="let subscription of subscriptionList; let i = index">
+            <td class="subscription-dateFrom">{{subscription.dateFrom | date:'dd/MM/YYYY'}}</td>
+            <td class="subscription-dateTo">{{subscription.dateTo | date:'dd/MM/YYYY'}}</td>
+            <td class="subscription-moneyPaid">{{subscription.moneyPaid | currency}}</td>
+        </tr>
+        <tr *ngIf="subscriptionList?.length === 0">
+            <td class="not-subscribed" colspan="3">You haven't been subscribed at our gym yet.</td>
+        </tr>
+    </table>
+</div>

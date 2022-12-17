@@ -27,7 +27,7 @@ export class NewPostComponent {
     
     postHandler(form: NgForm): void {
       if (form.invalid) {
-        this.isFormInvalid = false;
+        this.isFormInvalid = true;
       return;
     }
     const { title, description, imageLink } = form.value;

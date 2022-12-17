@@ -48,14 +48,7 @@
         [Route("user")]
         public IActionResult GetUser()
         {
-            var user = this.GetContextUser();
-            if (user != null)
-            {
-                var newToken = this.userRepository.CreateToken(user.UserId);
-                return this.Ok(new { newToken });
-            }
-
-            return this.NoContent();
+            return this.Ok();
         }
 
         [HttpPost]
