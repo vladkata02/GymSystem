@@ -15,6 +15,7 @@ static int Main(string[] args)
             .SqlDatabase(connectionString)
             .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly())
             .LogToConsole()
+            .WithVariablesDisabled()
             .Build();
 
     var result = upgrader.PerformUpgrade();

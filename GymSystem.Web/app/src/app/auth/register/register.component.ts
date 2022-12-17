@@ -11,6 +11,7 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
+  registerError = '';
 
   form = this.fb.group({
     username: ['', [Validators.required, Validators.minLength(5)]],
@@ -30,8 +31,14 @@ export class RegisterComponent {
     if (this.form.invalid) { return; }
     const { username, email, pass: { password, rePassword } = {} } = this.form.value;
     this.authService.register(username!, email!, password!, rePassword! || undefined)
-      .subscribe(user => {
+    .subscribe({
+      error: (errorResponse) => {
+        this.registerError = errorResponse.error;
+      },
+      next: () => {
+        localStorage.setItem('id_token', this.authService.user?.token);
         this.router.navigate(['/']);
-      });
+      }
+    });
   }
 }

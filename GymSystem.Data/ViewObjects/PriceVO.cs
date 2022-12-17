@@ -9,6 +9,10 @@ namespace GymSystem.Data.ViewObjects
 {
     public class PriceVO
     {
+        public PriceVO()
+        {
+        }
+
         public PriceVO(Price price)
         {
             this.PriceId = price.PriceId;
@@ -19,7 +23,7 @@ namespace GymSystem.Data.ViewObjects
 
         public int PriceId { get; set; }
 
-        public int Months { get; set; }
+        public int? Months { get; set; }
 
         public decimal Amount { get; set; }
 

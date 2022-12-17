@@ -1,0 +1,16 @@
+<div class="price-position">
+    <app-new-price></app-new-price>
+    <table class="price-table">
+        <tr class="headers">
+            <th>Months</th>
+            <th>Amount</th>
+        </tr>
+        <tr *ngFor="let price of priceList; let i = index">
+            <td class="price-months">{{ price.months ?? "Default price"}}</td>
+            <td class="price-moneyPaid">{{price.amount | currency}}</td>
+        </tr>
+        <tr *ngIf="priceList?.length === 0">
+            <td class="no-prices" colspan="3">You haven't added prices to your gym yet.</td>
+        </tr>
+    </table>
+</div>

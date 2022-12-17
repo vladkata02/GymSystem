@@ -56,6 +56,9 @@
         class="alert alert-danger">Repeat Password does not match
         password!</div>
     </ng-container>
+
+    <div *ngIf="registerError" class="alert alert-danger" ngModel="loginError">{{registerError}}</div>
+
     <button [disabled]="form.invalid">Create Account</button>
   </fieldset>
 </form>

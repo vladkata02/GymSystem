@@ -36,14 +36,6 @@ export class AuthService implements OnDestroy {
     return { headers: headers}
   }
 
-  // authorizedHeadersForUser(){
-  //   const headers = new HttpHeaders({
-  //     'Content-Type': 'application/json',
-  //     'Authorization': `Bearer ${localStorage.getItem("id_token")}`
-  //   });
-  //   return { headers: headers}
-  // }
-
   register(username: string, email: string, password: string, rePassword: string) {
     return this.http.post<IUser>('/api/auth/register', { username, email, password, rePassword})
       .pipe(tap(user => this.user$$.next(user)));
@@ -61,7 +53,6 @@ export class AuthService implements OnDestroy {
 
   getUser() {
     const headers = this.authorizedHeaders();
-    
     return this.http.get<IUser>('/api/auth/user', headers )
       .pipe(
         tap(user => this.user$$.next(user)),

@@ -46,6 +46,11 @@ namespace GymSystem.Data.Repositories
             return this.context.Users.Where(u => u.Email == email).Any();
         }
 
+        public User? GetUserById(int? userId)
+        {
+            return this.context.Users.Where(u => u.UserId == userId).FirstOrDefault();
+        }
+
         public void CreateUser(UserVO user)
         {
             var hashedPassword = BC.HashPassword(user.Password);

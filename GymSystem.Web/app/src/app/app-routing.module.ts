@@ -31,6 +31,10 @@ const routes: Routes = [
     loadChildren: () => import('./subscriptions/subscriptions.module').then(m => m.SubscriptionsModule)
   },
   {
+    path: 'prices',
+    loadChildren: () => import('./prices/prices.module').then(m => m.PricesModule)
+  },
+  {
     path: '**',
     redirectTo: '/not-found'
   }

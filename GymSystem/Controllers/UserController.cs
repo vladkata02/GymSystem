@@ -22,9 +22,8 @@
             this.userRepository = userRepository;
         }
 
-        [AllowAnonymous]
         [HttpPost("register")]
-        public IActionResult CreateUser(UserVO user)
+        public async Task<IActionResult> CreateUser(UserVO user)
         {
             if (this.userRepository.CheckIfUsernameExist(user.Username))
             {
@@ -40,15 +39,17 @@
 
             var token = this.userRepository.Authenticate(user);
 
-            return this.Ok(token);
+            return this.Ok(new { token });
         }
 
         [AllowAnonymous]
         [HttpGet]
         [Route("user")]
-        public IActionResult GetUser()
+        public User? GetUser()
         {
-            return this.Ok();
+            var userId = this.GetContextUser()?.UserId;
+
+            return this.userRepository.GetUserById(userId);
         }
 
         [HttpPost]

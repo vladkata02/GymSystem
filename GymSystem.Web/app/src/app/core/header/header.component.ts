@@ -15,4 +15,8 @@ export class HeaderComponent {
 
   constructor(private authService: AuthService, private router: Router) { }
 
+  get isAdmin() {
+    return this.authService.user?.userId === 1;
+  }
+  
 }

@@ -1,6 +1,8 @@
 ﻿using GymSystem.Data.Repositories;
 using GymSystem.Data.ViewObjects;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace GymSystem.API.Controllers
 {
@@ -21,12 +23,30 @@ namespace GymSystem.API.Controllers
             return this.priceRepository.GetAllPrices();
         }
 
+        [Authorize]
         [HttpPost("create")]
         public void CreatePrice(PriceVO price)
         {
-            var userId = int.Parse(this.HttpContext.User.Claims.First(c => c.Type == "UserId").Value);
+            var userId = this.GetContextUser().UserId;
 
             this.priceRepository.CreatePrice(price, userId);
+        }
+
+        private UserVO GetContextUser()
+        {
+            var identity = this.HttpContext.User.Identity as ClaimsIdentity;
+
+            if (identity != null)
+            {
+                var userClaims = identity.Claims;
+
+                return new UserVO
+                {
+                    UserId = int.Parse(userClaims.FirstOrDefault(o => o.Type == "UserId")?.Value),
+                };
+            }
+
+            return null;
         }
     }
 }

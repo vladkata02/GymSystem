@@ -10,42 +10,45 @@ import { IPrice } from 'src/app/shared/interfaces';
   styleUrls: ['./new-subscription.component.scss'],
 })
 export class NewSubscriptionComponent {
-
   loggedIn = false;
   isFormInvalid = false;
   prices: IPrice[] | null = null;
   currentPrice: number | null = null;
-  
+
   @ViewChild(NgForm, { static: true }) form!: ElementRef<HTMLInputElement>;
-  
+
   constructor(
     private apiService: ApiService,
     private authService: AuthService
-    ) {}
-    
-    ngOnInit(): void {
-      this.apiService.getAllPrices().subscribe({
-        next: (value: IPrice[]) => {
-          this.prices = value;
-        }
-      })
-    }
+  ) {}
 
-    getPrice(form: NgForm){
-        form.value.moneyPaid = this.prices?.find(e => e.months === form.value.months)?.amount;
-        this.currentPrice = form.value.moneyPaid;
-    }
-    
-    subscriptionHandler(form: NgForm): void {
-      if (form.invalid) {
-        this.isFormInvalid = true;
+  ngOnInit(): void {
+    this.apiService.getAllPrices().subscribe({
+      next: (value: IPrice[]) => {
+        this.prices = value;
+      },
+    });
+  }
+
+  getPrice(form: NgForm) {
+    const priceWhereMatchMonths = this.prices?.find(
+      (e) => e.months === form.value.months)?.amount;
+    const defaultPrice = this.prices?.find(
+      (e) => e.isDefaultPrice)?.amount;
+      form.value.moneyPaid = priceWhereMatchMonths ?? Number(defaultPrice) * form.value.months;
+    this.currentPrice = priceWhereMatchMonths ?? Number(defaultPrice) * form.value.months;
+  }
+
+  subscriptionHandler(form: NgForm): void {
+    if (form.invalid) {
+      this.isFormInvalid = true;
       return;
     }
     const { months, moneyPaid } = form.value;
 
-      this.apiService.createSubscription(months, moneyPaid).subscribe(() => {
-        window.location.reload();
-      });
+    this.apiService.createSubscription(months, moneyPaid).subscribe(() => {
+      window.location.reload();
+    });
   }
 
   ngDoCheck(): void {

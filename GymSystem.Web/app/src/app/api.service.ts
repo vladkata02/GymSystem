@@ -5,6 +5,7 @@ import { IPost } from './shared/interfaces/post';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth/auth.service';
 import { IPrice, ISubscription } from './shared/interfaces';
+import { CurrencyPipe } from '@angular/common';
 
 const apiURL = environment.apiURL;
 
@@ -23,9 +24,9 @@ export class ApiService {
     return { headers: headers}
   }
 
-  // makeRequest() {
-  //   return new HttpHeaders().set('Cookie', 'jwt=your-jwt-token');
-  // }
+  createPrice(amount: number, isDefaultPrice: boolean, months?: number ){
+    return this.httpClient.post<IPrice>(`${apiURL}/prices/create`, { months, amount, isDefaultPrice}, this.authorizedHeaders());
+  }
 
   getAllPrices(){
     const headers = this.authorizedHeaders();

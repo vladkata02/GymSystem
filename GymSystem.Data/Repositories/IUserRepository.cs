@@ -15,6 +15,8 @@ namespace GymSystem.Data.Repositories
 
         User GetByEmail(string email);
 
+        User? GetUserById(int? userId);
+
         bool CheckIfUsernameExist(string username);
 
         bool CheckIfEmailExist(string email);

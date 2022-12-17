@@ -19,6 +19,9 @@
         <li *ngIf="isLoggedIn">
           <a routerLink="/subscriptions/list">Subscriptions</a>
         </li>
+        <li *ngIf="isAdmin">
+          <a routerLink="/prices/list">Prices</a>
+        </li>
       </ul>
       <div class="auth">
           <li *ngIf="!isLoggedIn">

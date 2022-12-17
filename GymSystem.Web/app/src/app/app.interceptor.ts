@@ -21,11 +21,12 @@ export class AppInterceptor implements HttpInterceptor {
       req = req.clone({ url: req.url.replace('/api', apiURL), withCredentials: true },)
     }
     return next.handle(req).pipe(
-      catchError(err => of(err).pipe( // combineLatest([err], this.authService.user$).pipe(take(1))
+      catchError(err => of(err).pipe(
         withLatestFrom(this.authService.user$),
         switchMap(([err, user]) => {
           if (err.status === 401) {
             if (!user) {
+              localStorage.clear();
               this.router.navigate(['/auth/login']);
             } else {
               this.router.navigate(['/auth/no-permissions']);

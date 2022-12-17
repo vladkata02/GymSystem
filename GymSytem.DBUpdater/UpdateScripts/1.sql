@@ -11,10 +11,11 @@ GO
 
 CREATE TABLE [dbo].[Posts] (
     [PostId]                      INT                 NOT NULL IDENTITY,
+    [Title]                       NVARCHAR(MAX)       NOT NULL,
     [Description]                 NVARCHAR(MAX)       NOT NULL,
     [CreateDate]                  DATETIME2           NOT NULL,
     [UserId]                      INT                 NOT NULL,
-    [ImageContent]                VARBINARY(max)      NOT NULL,
+    [ImageLink]                   NVARCHAR(MAX)       NOT NULL
 
     CONSTRAINT [PK_Posts]         PRIMARY KEY ([PostId]),
     CONSTRAINT [FK_Post_User]     FOREIGN KEY ([UserId])   REFERENCES [dbo].[Users] ([UserId])
@@ -26,7 +27,7 @@ CREATE TABLE [dbo].[Subscriptions] (
     [UserId]                      INT                 NOT NULL,
     [DateFrom]                    DATETIME2           NOT NULL,
     [DateTo]                      DATETIME2           NOT NULL,
-    [MoneyPaid]                   DECIMAL             NOT NULL,
+    [MoneyPaid]                   DECIMAL(15,3)       NOT NULL,
 
     CONSTRAINT [PK_Subscriptions]          PRIMARY KEY ([SubscriptionId]),
     CONSTRAINT [FK_Subscriptions_User]     FOREIGN KEY ([UserId])   REFERENCES [dbo].[Users] ([UserId])
@@ -36,7 +37,7 @@ GO
 CREATE TABLE [dbo].[Prices] (
     [PriceId]                     INT                 NOT NULL IDENTITY,
     [Months]                      INT                 NULL,
-    [Amount]                      DECIMAL             NOT NULL,
+    [Amount]                      DECIMAL(15,3)       NOT NULL,
     [IsDefaultPrice]              BIT                 NOT NULL,
 
     CONSTRAINT [PK_Prices]        PRIMARY KEY ([PriceId]),
