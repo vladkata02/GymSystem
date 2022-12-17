@@ -1,7 +1,8 @@
 export interface IUser {
-  userId: Number;
+  userId: number;
   email: string;
   username: string;
   password: string;
   hasActiveSubscription: boolean;
+  token: any;
 }

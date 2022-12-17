@@ -17,16 +17,15 @@ builder.Services.AddAuthentication(x =>
     x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(o =>
 {
-    var key = Encoding.UTF8.GetBytes(configuration["JWT:Key"]);
-    o.SaveToken = true;
+    var key = Encoding.UTF8.GetBytes(configuration["Jwt:Key"]);
     o.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuer = false,
-        ValidateAudience = false,
+        ValidateIssuer = true,
+        ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = configuration["JWT:Issuer"],
-        ValidAudience = configuration["JWT:Audience"],
+        ValidIssuer = configuration["Jwt:Issuer"],
+        ValidAudience = configuration["Jwt:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(key),
     };
 });
@@ -39,8 +38,8 @@ builder.Services.AddCors(p => p.AddPolicy(myAllowSpecificOrigins, build =>
 builder.Services.AddMemoryCache();
 builder.Services.AddControllers();
 builder.Services.RegisterDataServices(configuration);
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie();
+builder.Services.AddAuthentication().AddCookie();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddGymSystemServices();
 builder.Services.AddSwaggerGen();

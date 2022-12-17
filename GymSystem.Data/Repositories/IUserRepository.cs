@@ -13,12 +13,16 @@ namespace GymSystem.Data.Repositories
     {
         User? GetById(int userId);
 
+        User GetByEmail(string email);
+
         bool CheckIfUsernameExist(string username);
 
         bool CheckIfEmailExist(string email);
 
         void CreateUser(UserVO user);
 
-        Tokens? Authenticate(UserVO user);
+        string Authenticate(UserVO user);
+
+        string CreateToken(int userId);
     }
 }

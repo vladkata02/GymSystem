@@ -1,0 +1,18 @@
+<form ngForm #form="ngForm" (ngSubmit)="postHandler(form)" class="new-post align-items-center">
+    <div class="field">
+        <label for="title">Title:</label>
+        <input type="text" ngModel #titleInput="ngModel" required id="title" name="title">
+    </div>
+    <div class="field">
+        <label for="description">Description:</label>
+        <input type="text" ngModel #descriptionInput="ngModel" required id="description" name="description">
+    </div>
+    <div class="field">
+        <label for="imageLink">Image URL:</label>
+        <input type="url" ngModel #imageLinkInput="ngModel" required id="imageLink" name="imageLink">
+    </div>
+    <button type="submit">Create post</button>
+</form>
+<div class="alert alert-danger" *ngIf="isFormInvalid">
+    Please fill all fields.
+</div>

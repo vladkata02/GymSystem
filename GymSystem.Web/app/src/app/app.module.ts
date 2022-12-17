@@ -11,9 +11,7 @@ import { appInterceptorProvider } from './app.interceptor';
 import { AuthenticateComponent } from './authenticate/authenticate.component';
 import { API_ERROR } from './shared/constants';
 import { BehaviorSubject } from 'rxjs';
-
-import { NgForm } from '@angular/forms';
-
+import { PostsModule } from './posts/posts.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +24,8 @@ import { NgForm } from '@angular/forms';
     CoreModule,
     HttpClientModule,
     SharedModule,
-    NgbModule
+    NgbModule,
+    PostsModule
   ],
   providers: [
     appInterceptorProvider,

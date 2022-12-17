@@ -31,6 +31,11 @@ namespace GymSystem.Data.Repositories
             return this.context.Users.Find(userId);
         }
 
+        public User GetByEmail(string email)
+        {
+            return this.context.Users.Where(u => u.Email == email).First();
+        }
+
         public bool CheckIfUsernameExist(string username)
         {
             return this.context.Users.Where(u => u.Username == username).Any();
@@ -48,9 +53,9 @@ namespace GymSystem.Data.Repositories
             this.context.SaveChanges();
         }
 
-        #pragma warning disable CS8766
-        public Tokens? Authenticate(UserVO user)
-        #pragma warning restore CS8766
+#pragma warning disable CS8766
+        public string Authenticate(UserVO user)
+#pragma warning restore CS8766
         {
             var wantedUser = this.context.Users.Where(u => u.Email == user.Email).FirstOrDefault();
 
@@ -59,20 +64,27 @@ namespace GymSystem.Data.Repositories
                 return null;
             }
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var tokenKey = Encoding.UTF8.GetBytes(configuration["JWT:Key"]);
-            var tokenDescriptor = new SecurityTokenDescriptor
+            return this.CreateToken(wantedUser.UserId);
+        }
+
+        public string CreateToken(int userId)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            var claims = new[]
             {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Email, user.Email),
-                    new Claim("UserId", $"{user.UserId}")
-                }),
-                Expires = DateTime.UtcNow.AddMinutes(30),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
+                new Claim("UserId", userId.ToString())
             };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return new Tokens { Token = tokenHandler.WriteToken(token) };
+
+            var token = new JwtSecurityToken(
+                configuration["Jwt:Issuer"],
+                configuration["Jwt:Audience"],
+                claims,
+                expires: DateTime.Now.AddMinutes(30),
+                signingCredentials: credentials);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }

@@ -30,9 +30,10 @@ export class LoginComponent {
           this.loginError = errorResponse.error;
         },
         next: () => {
-        const returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] || '/';
+          localStorage.setItem('id_token', this.authService.user?.token);
+          const returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] || '/';
 
-        this.router.navigate([returnUrl]);
+          this.router.navigate([returnUrl]);
         }
       });
   }

@@ -6,7 +6,7 @@ public class User
     {
     }
 
-    public User(string? username, string? email, string? passwordHashed, bool hasActiveSubscription)
+    public User(string username, string email, string passwordHashed, bool hasActiveSubscription)
     {
         Username = username;
         Email = email;
@@ -16,11 +16,11 @@ public class User
 
     public int UserId { get; set; }
 
-    public string? Username { get; set; }
+    public string Username { get; set; }
 
-    public string? Email { get; set; }
+    public string Email { get; set; }
 
-    public string? PasswordHashed { get; set; }
+    public string PasswordHashed { get; set; }
 
     public bool HasActiveSubscription { get; set; }
 }

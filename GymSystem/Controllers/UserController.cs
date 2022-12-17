@@ -2,6 +2,7 @@
 {
     using System;
     using System.Security.Claims;
+    using System.Threading.Tasks;
     using GymSystem.Data.Repositories;
     using GymSystem.Data.ViewObjects;
     using GymSystem.Domain;
@@ -45,21 +46,21 @@
         [AllowAnonymous]
         [HttpGet]
         [Route("user")]
-        public User? GetUser()
+        public IActionResult GetUser()
         {
-            var userId = this.HttpContext.User.FindFirst("UserId");
-            if (userId != null)
+            var user = this.GetContextUser();
+            if (user != null)
             {
-                return this.userRepository.GetById(int.Parse(userId.Value));
+                var newToken = this.userRepository.CreateToken(user.UserId);
+                return this.Ok(new { newToken });
             }
 
-            return null;
+            return this.NoContent();
         }
 
-        [AllowAnonymous]
         [HttpPost]
         [Route("login")]
-        public IActionResult Authenticate(UserVO user)
+        public async Task<IActionResult> AuthenticateAsync([FromBody] UserVO user)
         {
             var token = this.userRepository.Authenticate(user);
 
@@ -68,11 +69,14 @@
                 return this.Unauthorized("Wrong email or password!");
             }
 
-            var claims = new List<Claim>();
-            claims.Add(new Claim("UserId", $"{user.UserId}"));
+            var actualUser = this.userRepository.GetByEmail(user.Email);
 
-            this.Claims(claims);
-            return this.Ok(token);
+            var claims = new List<Claim>();
+            claims.Add(new Claim("UserId", $"{actualUser.UserId}"));
+
+            await this.ClaimsAsync(claims);
+
+            return this.Ok(new { token });
         }
 
         [HttpPost]
@@ -84,13 +88,30 @@
             return this.Ok();
         }
 
-        private void Claims(List<Claim> claim)
+        private async Task ClaimsAsync(List<Claim> claim)
         {
             var identity = new ClaimsIdentity(claim, CookieAuthenticationDefaults.AuthenticationScheme);
             var principal = new ClaimsPrincipal(identity);
             var props = new AuthenticationProperties();
             props.IsPersistent = true;
-            this.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal).Wait();
+            await this.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+        }
+
+        private UserVO GetContextUser()
+        {
+            var identity = this.HttpContext.User.Identity as ClaimsIdentity;
+
+            if (identity.HasClaim(o => o.Type == "UserId"))
+            {
+                var userClaims = identity.Claims;
+
+                return new UserVO
+                {
+                    UserId = int.Parse(userClaims.FirstOrDefault(o => o.Type == "UserId")?.Value),
+                };
+            }
+
+            return null;
         }
     }
 }

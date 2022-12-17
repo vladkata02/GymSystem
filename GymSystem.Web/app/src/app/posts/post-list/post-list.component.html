@@ -1,0 +1,14 @@
+<app-new-post></app-new-post>
+<div *ngFor="let post of postList; let i = index" class="post-container">
+    <div class="post">
+        <div class="image-author">
+            <div class="post-author">By {{post.username}}</div>
+            <img class="post-image" [src]="post.imageLink">
+        </div>
+        <div class="post-info">
+            <h2 class="post-title">{{post.title}}</h2>
+            <p class="post-description">{{post.description}}</p>
+            <p class="post-date">{{post.createDate | date:'hh:mm dd/MM/YYYY'}}</p>
+        </div>
+      </div>
+</div>

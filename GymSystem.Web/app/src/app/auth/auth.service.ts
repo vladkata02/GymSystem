@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, catchError, filter, of, Subscription, tap, throwError } from 'rxjs';
 import { IUser } from '../shared/interfaces';
@@ -15,6 +15,7 @@ export class AuthService implements OnDestroy {
   );
 
   user: IUser | null = null;
+  idToken: string | null = null;
 
   get isLoggedIn() {
     return this.user !== null;
@@ -24,8 +25,25 @@ export class AuthService implements OnDestroy {
 
   constructor(private http: HttpClient) {
     this.subscription = this.user$.subscribe(user => {
+      this.idToken = localStorage.getItem("id_token");
       this.user = user;
     });
+  }
+
+  authorizedHeaders(){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.user?.token}`
+    });
+    return { headers: headers}
+  }
+
+  authorizedHeadersForUser(){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem("id_token")}`
+    });
+    return { headers: headers}
   }
 
   register(username: string, email: string, password: string, rePassword: string) {
@@ -35,16 +53,19 @@ export class AuthService implements OnDestroy {
 
   login(email: string, password: string) {
     return this.http.post<any>('/api/auth/login', { email, password })
-      .pipe(tap(user => this.user$$.next(user)));;
+      .pipe(tap(user => this.user$$.next(user)));
   }
 
   logout() {
+    localStorage.removeItem("id_token");
     return this.http.post<void>('/api/auth/logout', {})
       .pipe(tap(() => this.user$$.next(null)));;
   }
 
   getUser() {
-    return this.http.get<IUser>('/api/auth/user', { withCredentials: true })
+    const headers = this.authorizedHeadersForUser();
+    
+    return this.http.get<IUser>('/api/auth/user', headers )
       .pipe(
         tap(user => this.user$$.next(user)),
         catchError((err) => {

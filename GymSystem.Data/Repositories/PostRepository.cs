@@ -19,14 +19,24 @@ namespace GymSystem.Data.Repositories
 
         public IList<PostVO> GetAllPosts()
         {
-            return this.context.Posts.Select(p => new PostVO(p))
-                                     .OrderBy(p => p.CreateDate)
-                                     .ToList();
+            return (from p in this.context.Posts
+                   join u in this.context.Users on p.UserId equals u.UserId
+                   select new PostVO
+                   {
+                       PostId = p.PostId,
+                       Title = p.Title,
+                       Description = p.Description,
+                       ImageLink = p.ImageLink,
+                       CreateDate = p.CreateDate,
+                       Username = u.Username,
+                       UserId = u.UserId
+                   }).OrderByDescending(p => p.CreateDate).ToList();
         }
 
         public void CreatePost(PostVO post, int userId)
         {
-            this.context.Posts.Add(new Post(post.Description, post.CreateDate, post.UserId, post.ImageContent));
+            this.context.Posts.Add(new Post(post.Title, post.Description, userId, post.ImageLink));
+            this.context.SaveChanges();
         }
     }
 }

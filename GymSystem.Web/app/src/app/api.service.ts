@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpContext, HttpHeaders } from '@angular/common/http'
 import { environment } from '../environments/environment';
-import { ITheme } from './shared/interfaces/theme';
 import { IPost } from './shared/interfaces/post';
+import { Observable } from 'rxjs';
+import { AuthService } from './auth/auth.service';
 
 const apiURL = environment.apiURL;
 
@@ -11,18 +12,26 @@ const apiURL = environment.apiURL;
 })
 export class ApiService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private authService: AuthService) { }
 
-  // loadThemes() {
-  //   return this.httpClient.get<ITheme[]>(`${apiURL}/themes`);
+  authorizedHeaders(){
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.authService.idToken}`
+    });
+    return { headers: headers}
+  }
+
+  // makeRequest() {
+  //   return new HttpHeaders().set('Cookie', 'jwt=your-jwt-token');
   // }
 
-  // loadTheme(id: number) {
-  //   return this.httpClient.get<ITheme>(`${apiURL}/themes/${id}`);
-  // }
+  createPost(title: string, description: string, imageLink: string): Observable<any> {
+    const headers = this.authorizedHeaders();
+    return this.httpClient.post<IPost>(`${apiURL}/posts/create`, { title, description, imageLink}, headers);
+  }
 
-  // loadPosts(limit?: number) {
-  //   return this.httpClient.get<IPost[]>(`${apiURL}/posts${limit ? `?limit=${limit}` : ``}`);
-  // }
-
+  loadPosts() {
+    return this.httpClient.get<IPost[]>(`${apiURL}/posts/list`);
+  }
 }

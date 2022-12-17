@@ -22,10 +22,10 @@ const routes: Routes = [
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   },
-  // {
-  //   path: 'theme',
-  //   loadChildren: () => import('./theme/theme.module').then(m => m.ThemeModule)
-  // },
+  {
+    path: 'posts',
+    loadChildren: () => import('./posts/posts.module').then(m => m.PostsModule)
+  },
   {
     path: '**',
     redirectTo: '/not-found'

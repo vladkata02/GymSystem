@@ -1,4 +1,5 @@
 ﻿using GymSystem.Domain;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,23 +10,32 @@ namespace GymSystem.Data.ViewObjects
 {
     public class PostVO
     {
-        public PostVO(Post post)
+        public PostVO()
         {
-            PostId = post.PostId;
-            Description = post.Description;
-            CreateDate = post.CreateDate;
-            UserId = post.UserId;
-            ImageContent = post.ImageContent;
         }
 
-        public int PostId { get; set; }
+        public PostVO(Post post)
+        {
+            this.PostId = post.PostId;
+            this.Title = post.Title;
+            this.Description = post.Description;
+            this.CreateDate = post.CreateDate;
+            this.UserId = post.UserId;
+            this.ImageLink = post.ImageLink;
+        }
 
-        public string? Description { get; set; }
+        public int? PostId { get; set; }
 
-        public DateTime CreateDate { get; set; }
+        public string Title { get; set; }
 
-        public int UserId { get; set; }
+        public string Description { get; set; }
 
-        public byte[]? ImageContent { get; set; }
+        public DateTime? CreateDate { get; set; }
+
+        public int? UserId { get; set; }
+
+        public string? Username { get; set; }
+
+        public string ImageLink { get; set; }
     }
 }

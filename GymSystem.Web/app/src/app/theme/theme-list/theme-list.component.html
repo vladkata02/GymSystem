@@ -1,5 +1,5 @@
 <div *ngIf="errorFetcingData">Error loading themes</div>
-<app-loader *ngIf="!themeList"></app-loader>
+<!-- <app-loader *ngIf="!themeList"></app-loader> Tova si go slagal ti pompata tezi komentari-->
 <div *ngFor="let theme of themeList; let i = index" class="theme-container">
   <div class="theme-name-wrapper">
     <div class="theme-name">
@@ -8,7 +8,7 @@
       </a>
       <div class="columns">
         <div>
-          <p>Date: <time>{{theme.created_at | elapsedTime}}</time></p>
+          <!-- <p>Date: <time>{{theme.created_at | elapsedTime}}</time></p> -->
           <div class="nick-name">
             <p>Username: <span>{{theme.userId.username}}</span></p>
           </div>

@@ -2,22 +2,25 @@
 {
     public class Post
     {
-        public Post(string? description, DateTime createDate, int userId, byte[]? imageContent)
+        public Post(string title, string description, int userId, string imageLink)
         {
-            Description = description;
-            CreateDate = createDate;
-            UserId = userId;
-            ImageContent = imageContent;
+            this.Title = title;
+            this.Description = description;
+            this.CreateDate = DateTime.Now;
+            this.UserId = userId;
+            this.ImageLink = imageLink;
         }
 
         public int PostId { get; set; }
 
-        public string? Description { get; set; }
+        public string Title { get; set; }
+
+        public string Description { get; set; }
 
         public DateTime CreateDate { get; set; }
 
         public int UserId { get; set; }
 
-        public byte[]? ImageContent { get; set; }
+        public string ImageLink { get; set; }
     }
 }

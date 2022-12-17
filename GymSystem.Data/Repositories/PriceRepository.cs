@@ -20,7 +20,6 @@ namespace GymSystem.Data.Repositories
         public IList<PriceVO> GetAllPrices()
         {
             return this.context.Prices.Select(p => new PriceVO(p))
-                                      .OrderBy(p => p.Month)
                                       .ToList();
         }
 
