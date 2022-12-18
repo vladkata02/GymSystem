@@ -49,12 +49,12 @@ Setup
         In \GymSystem\GymSytem.DBUpdater\Program.cs line 9, in the ""
         In GymSytem.API, add the following to user secrets:
 
-{
-  "ConnectionStrings": {
-    "DefaultConnectionString": "Your Connection String"
-  }
-}
+    {
+      "ConnectionStrings": {
+          "DefaultConnectionString": "Your Connection String"
+       }
+    }
 
     Open the repository in Visual Studio 2022 and start GymSystem.DBUpdater as the startup project. After the update scripts have been executed, you should have a GymSystem database in your server.
     Finally, start GymSystem.API as the startup project.
-    To start the application, run npm install in the terminal. To build the
+    To start the application, run npm install in the terminal. To build the application, navigate to \GymSystem\GymSystem.Web\app and run ng s.
