@@ -6,7 +6,7 @@ static int Main(string[] args)
 {
     var connectionString =
         args.FirstOrDefault()
-        ?? "Server=localhost\\MSSQLSERVER01;Database=GymSystem;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=true";
+        ?? "";
 
     EnsureDatabase.For.SqlDatabase(connectionString);
 
