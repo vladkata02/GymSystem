@@ -1,14 +1,13 @@
-form.login,
 form.register {
-  border: 1px solid #2C423F;
-  border-bottom: 1px solid #2C423F;
+  border: 1px solid #2c423f;
+  border-bottom: 1px solid #2c423f;
   width: 40%;
   margin: 2em auto 0;
   margin-bottom: 2em;
   text-align: center;
   padding-bottom: 10px;
 }
-.login fieldset,
+
 .register fieldset {
   border-radius: 0.3em;
   padding: 0.8em;
@@ -16,19 +15,16 @@ form.register {
   transform: translate(0, 0.5em);
 }
 
-.login h2,
 .register h2 {
   padding-top: 0;
   border-bottom: none;
   transform: translate(0, 0.5em);
 }
 
-.login p,
 .register p {
   padding-top: 0;
 }
 
-.login input,
 .register input {
   flex: 0 1 100%;
   outline: 0;
@@ -40,13 +36,11 @@ form.register {
   transform: translate(0, 0.5em);
 }
 
-.login select,
 .register select {
   border-color: black;
   transform: translate(0, 0.5em);
 }
 
-.login button,
 .register button {
   color: white;
   border: none;
@@ -59,7 +53,6 @@ form.register {
   transform: translate(0, 0.5em);
 }
 
-.login i,
 .register i {
   padding: 0.55em;
   top: 0.75em;
@@ -69,19 +62,16 @@ form.register {
   position: relative;
 }
 
-.login a,
 .register a {
   color: #007bff;
   transform: translate(0, 0.5em);
 }
 
-.login a:hover,
 .register a:hover {
   cursor: pointer;
   transform: translate(0, 0.5em);
 }
 
-.login .field,
 .register .field {
   display: flex;
   padding-bottom: 0;

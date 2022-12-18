@@ -17,6 +17,7 @@ namespace GymSystem.API.Controllers
             this.priceRepository = priceRepository;
         }
 
+        [Authorize]
         [HttpGet("list")]
         public IList<PriceVO> GetPrices()
         {

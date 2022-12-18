@@ -4,7 +4,11 @@ import { SubscriptionListComponent } from "./subscription-list/subscription-list
 const routes: Routes = [
   {
     path: 'list',
-    component: SubscriptionListComponent
+    component: SubscriptionListComponent,
+    data: {
+      title: 'Subscriptions',
+      loginRequired: true,
+    },
   }
 ];
 

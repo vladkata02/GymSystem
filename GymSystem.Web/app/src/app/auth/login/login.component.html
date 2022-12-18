@@ -18,7 +18,8 @@
 
     <p class="field field-icon">
       <label for="password"><span><i class="bi bi-key-fill"></i></span></label>
-      <input type="password" ngModel #passwordInput="ngModel" name="password" id="password" placeholder="******" required [minlength]="5">
+      <input type="password" ngModel #passwordInput="ngModel" name="password" id="password" placeholder="******"
+        required [minlength]="5">
     </p>
     <ng-container *ngIf="passwordInput.touched">
       <div class="alert alert-danger" *ngIf="passwordInput.errors?.['required']">

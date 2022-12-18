@@ -1,44 +1,45 @@
-form.login, form.register {
-  border: 1px solid #2C423F;
-  border-bottom: 1px solid #2C423F;
+form.login {
+  border: 1px solid #2c423f;
+  border-bottom: 1px solid #2c423f;
   width: 40%;
   margin: 2em auto 0;
   text-align: center;
   padding-bottom: 10px;
-} 
-.login fieldset, .register fieldset {
+}
+.login fieldset {
   padding: 2em;
   background-color: #ffffff;
   transform: translate(0, 0.5em);
 }
 
-.login h2, .register h2 {
+.login h2,
+.register h2 {
   padding-top: 0;
   border-bottom: none;
   transform: translate(0, 0.5em);
 }
 
-.login p, .register p {
+.login p {
   padding-top: 0;
 }
 
-.login input, .register input {
+.login input {
   flex: 0 1 100%;
   outline: 0;
   border-width: 0 0 2px;
   padding: 0.3em;
-  border-left: 0.3em #949B96;
+  border-left: 0.3em #949b96;
   border-top-right-radius: 0.3em;
   border-bottom-right-radius: 0.3em;
   transform: translate(0, 0.5em);
 }
 
-.login select, .register select {
+.login select {
   border-color: black;
   transform: translate(0, 0.5em);
 }
 
-.login button, .register button {
+.login button {
   color: white;
   border: none;
   padding: 0.6em 1.2em;
@@ -49,7 +50,7 @@ form.login, form.register {
   transform: translate(0, 0.5em);
 }
 
-.login i, .register i {
+.login i {
   padding: 0.55em;
   top: 0.75em;
   line-height: 2.5em;
@@ -58,17 +59,17 @@ form.login, form.register {
   position: relative;
 }
 
-.login a, .register a {
+.login a {
   color: #007bff;
   transform: translate(0, 0.5em);
 }
 
-.login a:hover, .register a:hover {
+.login a:hover {
   cursor: pointer;
   transform: translate(0, 0.5em);
 }
 
-.login .field, .register .field {
+.login .field {
   display: flex;
   padding-bottom: 0;
 }

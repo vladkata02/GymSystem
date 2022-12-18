@@ -1,7 +1,8 @@
 <form ngForm #form="ngForm" (ngSubmit)="priceHandler(form)" class="new-price align-items-center">
     <div class="field">
         <label for="Months">Months</label>
-        <input type="number" min="1" required [disabled]="form.value.isDefaultPrice === true" ngModel #monthsInput="ngModel" id="months" name="months">
+        <input type="number" min="1" required [disabled]="form.value.isDefaultPrice === true" ngModel
+            #monthsInput="ngModel" id="months" name="months">
     </div>
     <div class="field">
         <label for="Amount">Amount</label>
@@ -9,7 +10,8 @@
     </div>
     <div class="field">
         <label for="IsDefaultPrice">Default price</label>
-        <input type="radio" (ngModelChange)="radioChanged(form)" required ngModel #isDefaultPriceInput="ngModel" [value]="true" name="isDefaultPrice" />
+        <input type="radio" (ngModelChange)="radioChanged(form)" required ngModel #isDefaultPriceInput="ngModel"
+            [value]="true" name="isDefaultPrice" />
         <label>Yes</label>
         <input type="radio" required ngModel #isDefaultPriceInput="ngModel" [value]="false" name="isDefaultPrice" />
         <label>No</label>

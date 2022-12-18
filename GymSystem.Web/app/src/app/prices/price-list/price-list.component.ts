@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/auth/auth.service';
 import { IPrice } from 'src/app/shared/interfaces';
 import { ApiService } from '../../api.service';
 
@@ -11,7 +12,7 @@ export class PriceListComponent {
   priceList: IPrice[] | null = null;
   errors: Error | null = null;
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.apiService.getAllPrices().subscribe({
@@ -23,4 +24,9 @@ export class PriceListComponent {
       }
     });
   }
+
+  get isAdmin() {
+    return this.authService.user?.userId === 1;
+  }
 }
+

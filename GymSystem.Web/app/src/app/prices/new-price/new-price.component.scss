@@ -1,39 +1,39 @@
 :root {
-    --form-control-color: #2C423F;
+  --form-control-color: #2c423f;
 }
 
 .new-price {
-    margin-top: 1rem;
-    background-color: #C5C5C5;
-    border-radius: 15px;
-    border:  solid #4C5B61 3px;
-    display: flex;
-    height: 4.5rem;
+  margin-top: 1rem;
+  background-color: #c5c5c5;
+  border-radius: 15px;
+  border: solid #4c5b61 3px;
+  display: flex;
+  height: 4.5rem;
 }
 .field {
-    margin-left: 1rem;
+  margin-left: 1rem;
 }
 
 .amount {
-    text-align: end;
+  text-align: end;
 }
 
 input {
-    margin-left: 0.5rem;
-    outline: 0;
-    border-width: 0 0 2px;
-    border-radius: 15px;
-    padding: 0.3em;
+  margin-left: 0.5rem;
+  outline: 0;
+  border-width: 0 0 2px;
+  border-radius: 15px;
+  padding: 0.3em;
 }
 
 button {
-    margin-left: 1rem;
-    width: 7rem;
-    border-radius: 15px;
-    height: 2.35rem;
-    color: white
+  margin-left: 1rem;
+  width: 7rem;
+  border-radius: 15px;
+  height: 2.35rem;
+  color: white;
 }
 
-input[type=radio] {
-    accent-color: #2C423F;
+input[type="radio"] {
+  accent-color: #2c423f;
 }

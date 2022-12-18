@@ -8,7 +8,10 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    component: HomeComponent
+    component: HomeComponent,
+    data: {
+      title: 'Home',
+    }
   },
   {
     path: 'not-found',
